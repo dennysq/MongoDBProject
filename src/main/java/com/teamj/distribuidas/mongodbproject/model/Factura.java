@@ -6,6 +6,7 @@
 package com.teamj.distribuidas.mongodbproject.model;
 
 import com.teamj.distribuidas.mongodbproject.persistence.BaseEntity;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.mongodb.morphia.annotations.Embedded;
@@ -50,6 +51,8 @@ public class Factura extends BaseEntity {
     }
 
     public Factura() {
+        this.detalles = new ArrayList<>();
+        this.fechaEmision = new Date();
     }
 
 }
