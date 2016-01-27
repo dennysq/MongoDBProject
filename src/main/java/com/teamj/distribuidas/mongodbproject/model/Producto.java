@@ -14,17 +14,17 @@ import org.mongodb.morphia.annotations.Entity;
  * @author Freddy
  */
 @Entity(noClassnameStored = true)
-public class Producto extends BaseEntity{
+public class Producto extends BaseEntity {
 
     private String codigo;
     private String nombre;
-    private BigDecimal precio;
+    private Float precio;
     private Integer stock;
 
     public Producto() {
     }
 
-    public Producto(String codigo, String nombre, BigDecimal precio, Integer stock) {
+    public Producto(String codigo, String nombre, Float precio, Integer stock) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.precio = precio;
@@ -47,11 +47,11 @@ public class Producto extends BaseEntity{
         this.nombre = nombre;
     }
 
-    public BigDecimal getPrecio() {
+    public Float getPrecio() {
         return precio;
     }
 
-    public void setPrecio(BigDecimal precio) {
+    public void setPrecio(Float precio) {
         this.precio = precio;
     }
 

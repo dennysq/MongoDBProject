@@ -52,7 +52,7 @@ public class ProductoBean implements Serializable {
 
             }
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El  nuevo producto no se pudo registrar"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "El  nuevo producto no se pudo registrar"+e.getMessage()));
             System.out.println("" + e);
         }
 
