@@ -5,10 +5,15 @@
  */
 package com.teamj.distribuidas.mongodbproject.model;
 
+import java.util.Date;
+import org.mongodb.morphia.annotations.Entity;
+
 /**
  *
  * @author Freddy
  */
+@Entity(noClassnameStored = true)
 public class Factura {
-    
+
+    private Date fechaEmision;
 }

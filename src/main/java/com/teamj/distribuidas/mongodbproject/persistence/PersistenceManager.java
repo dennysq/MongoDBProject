@@ -19,7 +19,7 @@ import com.mongodb.WriteConcern;
  */
 public final class PersistenceManager {
 
-    public static final PersistenceManager INSTANCE = new PersistenceManager();
+    private  static final PersistenceManager INSTANCE = new PersistenceManager();
     private static Morphia morphia;
     private static MongoClient mongoClient;
     private final Datastore mds;

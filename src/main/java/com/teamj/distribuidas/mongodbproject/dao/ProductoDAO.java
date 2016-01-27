@@ -5,7 +5,7 @@
  */
 package com.teamj.distribuidas.mongodbproject.dao;
 
-import com.teamj.distribuidas.mongodbproject.model.Cliente;
+import com.teamj.distribuidas.mongodbproject.model.Producto;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.dao.BasicDAO;
@@ -16,9 +16,9 @@ import org.mongodb.morphia.dao.BasicDAO;
  *
  * @author Dennys
  */
-public class ClienteDAO extends BasicDAO<Cliente,ObjectId> {
+public class ProductoDAO extends BasicDAO<Producto,ObjectId> {
 
-    public ClienteDAO(Class<Cliente> entityClass, Datastore ds) {
+    public ProductoDAO(Class<Producto> entityClass, Datastore ds) {
         super(entityClass, ds);
     }
     

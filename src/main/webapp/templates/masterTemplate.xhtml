@@ -106,17 +106,11 @@ and open the template in the editor.
         <h:form id="menu_form">
             <p:menubar  styleClass="centeredMenuBar" >
                 <p:menuitem value="Home"  icon="fa fa-home" url="home.xhtml"/>              
-                <p:menuitem value="Roles" icon="fa fa-suitcase" url="mochila.xhtml" rendered="#{sessionBean.isAdmin()}"/>
-                <p:menuitem value="Actividades" icon="fa fa-flag" url="actividad.xhtml" rendered="#{sessionBean.isAdmin()}"/>
-                <p:menuitem value="Excursiones" icon="fa fa-binoculars" url="#{sessionBean.isAdmin() eq true ?'excursion.xhtml':'excursion_user.xhtml'}"/>
-                <p:menuitem value="Comentarios" icon="fa fa-comments" rendered="false"/>
-                <p:menuitem value="Artículos" icon="fa fa-pencil" url="articulo.xhtml" rendered="#{sessionBean.isAdmin()}"/>
-                <p:menuitem value="Reportes" icon="fa fa-area-chart" url="reporte.xhtml" rendered="#{sessionBean.isAdmin()}"/> 
-                <p:menuitem value="Mi Mochila" icon="fa fa-shopping-cart" url="mochila_compra.xhtml" rendered="#{!sessionBean.isAdmin()}"/>
-                <p:menuitem value="Mi Perfil"  icon="fa fa-user" url="profile.xhtml" />
-                <f:facet name="options"> 
-                    <p:commandButton value="Logout" action="#{sessionBean.logout()}" icon="fa fa-sign-out" />
-                </f:facet>
+                <p:menuitem value="Clientes" icon="fa fa-users" url="cliente.xhtml" />
+
+                <p:menuitem value="Facturas" icon="fa fa-calculator" url="factura.xhtml"/>
+                <p:menuitem value="Productos" icon="fa fa-tag" url="producto.xhtml" />
+                <p:menuitem value="Reportes" icon="fa fa-area-chart" url="reporte.xhtml" /> 
             </p:menubar>
             <p:confirmDialog global="true">
                 <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />

@@ -5,6 +5,7 @@
  */
 package com.teamj.distribuidas.mongodbproject.model;
 
+import com.teamj.distribuidas.mongodbproject.persistence.BaseEntity;
 import org.mongodb.morphia.annotations.Entity;
 
 /**
@@ -12,11 +13,26 @@ import org.mongodb.morphia.annotations.Entity;
  * @author Freddy
  */
 @Entity(noClassnameStored = true)
-public class Cliente {
+public class Cliente extends BaseEntity{
 
-    private String ruc;
-    private String cedula;
+    private String identificacion;
     private String nombre;
-    private String apellido;
+
+    public String getIdentificacion() {
+        return identificacion;
+    }
+
+    public void setIdentificacion(String identificacion) {
+        this.identificacion = identificacion;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+    
 
 }

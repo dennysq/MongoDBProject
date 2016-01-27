@@ -8,14 +8,14 @@ package com.teamj.distribuidas.mongodbproject.beans;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-
 /**
  *
  * @author Gaming
  */
-@ManagedBean
 @ViewScoped
-public class FacturaBean implements Serializable {
-
+@ManagedBean
+public class ReporteBean implements Serializable {
     
+    
+   
 }

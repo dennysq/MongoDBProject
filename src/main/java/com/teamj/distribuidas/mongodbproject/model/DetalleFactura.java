@@ -5,10 +5,13 @@
  */
 package com.teamj.distribuidas.mongodbproject.model;
 
+import org.mongodb.morphia.annotations.Entity;
+
 /**
  *
  * @author Freddy
  */
+
 public class DetalleFactura {
     
 }

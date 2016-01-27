@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/templates/masterTemplate.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                >
+    <ui:define name="title">Productos</ui:define>
+    <ui:define name="content">
+        <h:form id="main_form" >
+            <p:panel >
+                <h1 style="text-align: center">
+                    <h:outputText 
+                        value="Nuevo Producto" />
+                </h1>
+                <p:panelGrid columns="2"  styleClass="no_border center_block panel-grid-no-border">
+                    <p:outputLabel for="codigo" value="Código:"/>
+                    <p:inputText id="codigo" 
+                                 value="#{productoBean.producto.codigo}" 
+                                 required="true"
+                                 maxlength="13"
+                                 requiredMessage="Ingrese un código del producto">
+
+                    </p:inputText>
+                    <p:outputLabel for="nombre" value="Nombre:"/>
+                    <p:inputText id="nombre" 
+                                 value="#{productoBean.producto.nombre}" 
+                                 required="true"
+                                 maxlength="200"
+                                 requiredMessage="Ingrese un nombre del producto">
+                        <pe:keyFilter regEx="/[a-z_]/i"/>
+                    </p:inputText>
+                    <p:outputLabel for="precio" value="Precio:"/>
+                    <pe:inputNumber id="precio"
+                                    required="true"
+                                    requiredMessage="Ingrese un precio"
+                                    value="#{productoBean.producto.precio}" 
+                                    symbol="$ " minValue="0.00" maxValue="1000001.00" 
+                                    decimalSeparator="," thousandSeparator="." />  
+                    <p:outputLabel for="stock" value="Stock:"/>
+                    <pe:inputNumber  id="stock" minValue="0" maxValue="1000001" 
+                                     value="#{productoBean.producto.stock}" required="true"/>
+                    <p:spacer/>
+                    <p:commandButton value="Agregar" 
+                                     actionListener="#{productoBean.agregarProducto()}"  
+                                     update="@form" />     
+                </p:panelGrid>
+            </p:panel>
+        </h:form>
+    </ui:define>
+</ui:composition>
+
