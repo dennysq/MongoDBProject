@@ -6,14 +6,121 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions"               
                 xmlns:pe="http://primefaces.org/ui/extensions"
                 >
     <ui:define name="title">Factura</ui:define>
     <ui:define name="content">
-        <h:form>
-        </h:form>
+        <p:panel >
+            <h:form>
+                <h1 style="text-align: center">
+                    <h:outputText 
+                        value="Nueva Factura" />
+                </h1>
+                <p:panelGrid columns="3"  styleClass="no_border center_block panel-grid-no-border">
+                    <p:outputLabel for="identificacion" value="Cédula/RUC:"/>
+                    <p:inputText id="identificacion" 
+                                 value="#{facturaBean.cliente.identificacion}" 
+                                 required="true"
+                                 maxlength="13"
+                                 requiredMessage="Ingrese una identifiación del cliente">
+
+                    </p:inputText>
+                    <p:commandButton value="Buscar" icon="fa fa-search" 
+                                     actionListener="#{facturaBean.buscarCliente()}"  
+                                     update="@form :detail_form" />     
 
 
+                    <p:outputLabel for="nombre" value="Nombre:"/>
+                    <p:inputText id="nombre" 
+                                 value="#{facturaBean.cliente.nombre}" 
+                                 required="true"
+                                 readonly="true"
+                                 maxlength="200"
+                                 requiredMessage="Ingrese un nombre del cliente">
+                        <pe:keyFilter regEx="/[a-z_]/i"/>
+                    </p:inputText>
+                    <p:spacer/>
+                    <p:outputLabel for="fecha" value="Fecha:"/>
+                    <p:calendar id="fecha"
+                                required="true"
+                                requiredMessage="Ingrese una fecha"
+                                value="#{facturaBean.factura.fechaEmision}" 
+                                locale="es"
+                                pattern="dd/MM/yyyy"
+                                mindate="01/01/2016"
+                                />  
+                    <p:spacer/>
+                </p:panelGrid>
+            </h:form>
+            <h:form id="detail_form">
+                <p:panelGrid columns="1"  styleClass="no_border center_block panel-grid-no-border">
+                    <p:panel header="Detalle">
+                        <p:panelGrid columns="3"  styleClass="no_border center_block panel-grid-no-border">
+                            <p:selectOneMenu  value="#{facturaBean.idProducto}" >
+                                <p:ajax listener="#{facturaBean.cargarProductoSeleccionado}"/>
+                                <f:selectItems value="#{facturaBean.productos}"
+                                               var="producto"
+                                               itemValue="#{producto.codigo}"
+                                               itemLabel="#{producto.codigo}'-'#{producto.nombre}"/>
+                            </p:selectOneMenu>
+                            <pe:inputNumber  id="stock" minValue="0" maxValue="1000001" 
+                                             title="Cantidad"
+                                             requiredMessage="Ingrese una cantidad"
+                                             validatorMessage="La cantidad no puede ser cero"
+                                             value="#{facturaBean.cantidad}" 
+                                             required="true">
+                                <p:tooltip hideEvent="blur" showEvent="focus" />
+                                <f:validateLongRange minimum="1"/>
+                            </pe:inputNumber>
+
+                            <p:commandButton value="Agregar Detalle" 
+                                             actionListener="#{facturaBean.agregarDetalle()}" 
+                                             disabled="#{(facturaBean.cliente.nombre  eq null or facturaBean.cliente.nombre  eq '')}"
+                                             update="@form" />  
+                        </p:panelGrid>
+                    </p:panel>
+                    <p:dataTable
+                        id="tabla_detalles"
+                        value="#{facturaBean.factura.detalles}"
+                        rows="3"
+                        var="detalle"
+                        paginator="true"
+                        paginatorPosition="bottom"
+                        emptyMessage="No hay detalles"
+                        style="width: 600px;"
+                        >
+                        <p:column headerText="Código">
+                            <h:outputText value="#{detalle.codigo}" />
+                        </p:column>
+                        <p:column headerText="Nombre">
+                            <h:outputText value="#{detalle.nombre}" />
+                        </p:column>
+                        <p:column headerText="Cantidad">
+                            <h:outputText value="#{detalle.cantidad}" >
+
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Precio">
+                            <h:outputText value="#{detalle.precioUnitario}" >
+                                <f:convertNumber currencySymbol="$" type="currency" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Subtotal">
+                            <h:outputText value="#{detalle.subtotal}" >
+                                <f:convertNumber currencySymbol="$" type="currency" />
+                            </h:outputText>
+                        </p:column>
+                    </p:dataTable>               
+                    <p:commandButton value="Guardar" 
+                                     actionListener="#{facturaBean.guardarFactura()}"  
+                                     disabled="#{(facturaBean.cliente.nombre  eq null or facturaBean.cliente.nombre  eq '') or (fn:length(facturaBean.factura.detalles) eq 0)}"
+                                     update="@form" >
+                        <p:confirm header="Confirmación" message="¿Está seguro de guardar la factura?" icon="ui-icon-alert" />
+                    </p:commandButton>     
+                </p:panelGrid>
+            </h:form>
+        </p:panel>
     </ui:define>
 </ui:composition>
 
