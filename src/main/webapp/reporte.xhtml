@@ -10,7 +10,62 @@
     <ui:define name="title">Reportes</ui:define>
     <ui:define name="content">
         <h:form >
-
+            <p:commandButton value="Reporte Productos" actionListener="#{reporteBean.mostarReporteProductos()}" icon="icon-report" update="@form"/>
+            <p:commandButton value="Reporte Clientes" actionListener="#{reporteBean.mostarReporteClientes()}" icon="icon-report" update="@form"/>
+            <p:commandButton value="Reporte Ventas" actionListener="#{reporteBean.mostarReporteVentas()}" icon="icon-report" update="@form"/>
+            <p:dataTable id="tabla_reporteProductos" class="center_block"
+                             var="mochila" 
+                             value="#{mochilaBean.mochilas}" 
+                             selectionMode="single" 
+                             rows="6"
+                             paginator="true"
+                             paginatorPosition="bottom"
+                             emptyMessage="No hay Datos" rendered="#{reporteBean.reporteProductos}"                                                          
+                             style="width: 600px;"
+                             >                    
+                    <p:column headerText="Producto">
+                        <h:outputText value="#{mochila.id}" />
+                    </p:column>
+                    <p:column headerText="Monto">
+                        <h:outputText value="#{mochila.nombre}" />
+                    </p:column>                    
+                </p:dataTable>
+            <p:dataTable id="tabla_reporteClientes" class="center_block"
+                             var="mochila" 
+                             value="#{mochilaBean.mochilas}" 
+                             selectionMode="single" 
+                             rows="6"
+                             paginator="true"
+                             paginatorPosition="bottom"
+                             emptyMessage="No hay Datos" rendered="#{reporteBean.reporteClientes}"                                                          
+                             style="width: 600px;"
+                             >                    
+                    <p:column headerText="Cliente">
+                        <h:outputText value="#{mochila.id}" />
+                    </p:column>
+                    <p:column headerText="Monto">
+                        <h:outputText value="#{mochila.nombre}" />
+                    </p:column>                    
+                </p:dataTable>
+            <p:dataTable id="tabla_reporteVentas" class="center_block"
+                             var="mochila" 
+                             value="#{mochilaBean.mochilas}" 
+                             selectionMode="single" 
+                             rows="6"
+                             paginator="true"
+                             paginatorPosition="bottom"
+                             emptyMessage="No hay Datos" rendered="#{reporteBean.reporteVentas}"                                                          
+                             style="width: 600px;"
+                             >                    
+                    <p:column headerText="Fecha">
+                        <h:outputText value="#{mochila.id}" />
+                    </p:column>
+                    <p:column headerText="Monto">
+                        <h:outputText value="#{mochila.nombre}" />
+                    </p:column>                    
+                </p:dataTable>
+            
+            
         </h:form>
 
     </ui:define>
