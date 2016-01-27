@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package espe.edu.ec.distri.modelo;
+package com.teamj.distribuidas.mongodbproject.beans;
 
 /**
  *
  * @author Freddy
  */
-public class DetalleFactura {
+public class FacturaBean {
     
 }
