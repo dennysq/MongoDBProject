@@ -14,12 +14,18 @@ import com.teamj.distribuidas.mongodbproject.model.Factura;
 import com.teamj.distribuidas.mongodbproject.model.Producto;
 import com.teamj.distribuidas.mongodbproject.persistence.PersistenceManager;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import org.mongodb.morphia.aggregation.Accumulator;
+import org.mongodb.morphia.aggregation.Group;
+import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Id;
 import org.primefaces.event.SelectEvent;
 
 /**
@@ -39,7 +45,9 @@ public class FacturaBean implements Serializable {
     private Integer cantidad;
     private Producto productoSeleccionado;
     private String idProducto;
+    private List<AgregacionProducto> productosSumarizados;
 
+    
     public FacturaBean() {
         this.cliente = new Cliente();
         this.factura = new Factura();
@@ -48,6 +56,16 @@ public class FacturaBean implements Serializable {
         this.facturaDAO = new FacturaDAO(Factura.class, PersistenceManager.instance().datastore());
         this.cantidad = 1;
         this.productoSeleccionado = new Producto();
+        this.productosSumarizados = new ArrayList<>();
+
+    }
+
+    public void setProductosSumarizados(List<AgregacionProducto> productosSumarizados) {
+        this.productosSumarizados = productosSumarizados;
+    }
+
+    public List<AgregacionProducto> getProductosSumarizados() {
+        return productosSumarizados;
     }
 
     public void setIdProducto(String idProducto) {
@@ -73,6 +91,12 @@ public class FacturaBean implements Serializable {
             this.productoSeleccionado = productos.get(0);
 
         }
+        Iterator<AgregacionProducto> aggregate = PersistenceManager.instance().datastore().createAggregation(Factura.class).unwind("detalles").group("detalles.nombre", Group.grouping("total", new Accumulator("$sum", "detalles.subtotal"))).aggregate(AgregacionProducto.class);
+        while (aggregate.hasNext()) {
+            this.productosSumarizados.add(aggregate.next());
+
+        }
+
     }
 
     public void setProductoSeleccionado(Producto productoSeleccionado) {
