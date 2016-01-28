@@ -10,61 +10,76 @@
     <ui:define name="title">Reportes</ui:define>
     <ui:define name="content">
         <h:form >
-            <p:commandButton value="Reporte Productos" actionListener="#{reporteBean.mostarReporteProductos()}" icon="icon-report" update="@form"/>
-            <p:commandButton value="Reporte Clientes" actionListener="#{reporteBean.mostarReporteClientes()}" icon="icon-report" update="@form"/>
-            <p:commandButton value="Reporte Ventas" actionListener="#{reporteBean.mostarReporteVentas()}" icon="icon-report" update="@form"/>
-            <p:dataTable id="tabla_reporteProductos" class="center_block"
-                             var="agregacionProducto" 
-                             value="#{reporteBean.productosSumarizados}" 
-                             
-                             rows="6"
-                             paginator="true"
-                             paginatorPosition="bottom"
-                             emptyMessage="No hay Datos" rendered="#{reporteBean.reporteProductos}"                                                          
-                             style="width: 600px;"
-                             >                    
-                    <p:column headerText="Producto">
-                        <h:outputText value="#{agregacionProducto.nombre}" />
-                    </p:column>
-                    <p:column headerText="Monto">
-                        <h:outputText value="#{agregacionProducto.total}" />
-                    </p:column>                    
-                </p:dataTable>
-            <p:dataTable id="tabla_reporteClientes" class="center_block"
-                             var="agregacionCliente" 
-                             value="#{reporteBean.clientesSumarizados}"                               
-                             rows="6"
-                             paginator="true"
-                             paginatorPosition="bottom"
-                             emptyMessage="No hay Datos" rendered="#{reporteBean.reporteClientes}"                                                          
-                             style="width: 600px;"
-                             >                    
-                    <p:column headerText="Cliente">
-                        <h:outputText value="#{agregacionCliente.nombre}" />
-                    </p:column>
-                    <p:column headerText="Monto">
-                        <h:outputText value="#{agregacionCliente.total}" />
-                    </p:column>                    
-                </p:dataTable>
-            <p:dataTable id="tabla_reporteVentas" class="center_block"
-                             var="agregacionVentas" 
-                             value="#{reporteBean.ventasSumarizados}"                              
-                             rows="6"
-                             paginator="true"
-                             paginatorPosition="bottom"
-                             emptyMessage="No hay Datos" rendered="#{reporteBean.reporteVentas}"                                                          
-                             style="width: 600px;"
-                             >                    
-                    <p:column headerText="Fecha">
-                        <h:outputText value="#{agregacionVentas.dia}" />
-                    </p:column>
-                    <p:column headerText="Monto">
-                        <h:outputText value="#{agregacionVentas.total}" />
-                    </p:column>                    
-                </p:dataTable>
-            
-            
-        </h:form>
+            <p:panel >
+                <p:accordionPanel>
+                    <p:tab title="Reporte I - Ventas Sumarizadas por Producto">
+                        <p:dataTable id="tabla_reporteProductos" class="center_block"
+                                     var="agregacionProducto" 
+                                     value="#{reporteBean.productosSumarizados}" 
 
+                                     rows="6"
+                                     paginator="true"
+                                     paginatorPosition="bottom"
+                                     emptyMessage="No hay Datos"                                                 
+                                     style="width: 600px;"
+                                     >                    
+                            <p:column headerText="Producto">
+                                <h:outputText value="#{agregacionProducto.nombre}" />
+                            </p:column>
+                            <p:column headerText="Monto">
+                                <h:outputText value="#{agregacionProducto.total}" />
+                            </p:column>                    
+                        </p:dataTable>
+                    </p:tab>
+                    <p:tab title="Reporte II - Ventas Sumarizadas por Cliente">
+
+                        <p:dataTable id="tabla_reporteClientes" class="center_block"
+                                     var="agregacionCliente" 
+                                     value="#{reporteBean.clientesSumarizados}"                               
+                                     rows="6"
+                                     paginator="true"
+                                     paginatorPosition="bottom"
+                                     emptyMessage="No hay Datos" 
+                                     style="width: 600px;"
+                                     >                    
+                            <p:column headerText="Cliente">
+                                <h:outputText value="#{agregacionCliente.nombre}" />
+                            </p:column>
+                            <p:column headerText="Monto">
+                                <h:outputText value="#{agregacionCliente.total}" />
+                            </p:column>                    
+                        </p:dataTable>
+                    </p:tab>
+                    <p:tab title="Reporte III - Ventas Diarias">
+
+                        <p:dataTable id="tabla_reporteVentas" class="center_block"
+                                     var="agregacionVentas"
+                                     sortBy="#{agregacionVentas.dia}"
+                                     value="#{reporteBean.ventasSumarizados}"                              
+                                     rows="6"
+                                     paginator="true"
+                                     paginatorPosition="bottom"
+                                     emptyMessage="No hay Datos" 
+                                     style="width: 600px;"
+                                     >                    
+                            <p:column headerText="Fecha">
+                                
+                                <h:outputText value="#{agregacionVentas.dia}" >
+                                    <f:convertDateTime locale="es" pattern="dd-MMM-yyyy"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column headerText="Monto">
+                                <h:outputText value="#{agregacionVentas.total}" />
+                            </p:column> 
+                            
+                        </p:dataTable>
+                    </p:tab>
+                </p:accordionPanel>
+
+
+
+
+        </p:panel>
+        </h:form>
     </ui:define>
 </ui:composition>

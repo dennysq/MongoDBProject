@@ -26,6 +26,16 @@ public class Factura extends BaseEntity {
     @Embedded
     private List<DetalleFactura> detalles;
 
+    private String nombre;
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
     public Cliente getCliente() {
         return cliente;
     }
@@ -52,7 +62,7 @@ public class Factura extends BaseEntity {
 
     public Factura() {
         this.detalles = new ArrayList<>();
-        this.fechaEmision = new Date();
+       
     }
 
 }

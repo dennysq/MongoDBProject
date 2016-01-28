@@ -14,6 +14,7 @@ import org.mongodb.morphia.annotations.Id;
  */
 @Entity
 public class AgregacionClientes {
+
     @Id
     private String nombre;
     private Float total;

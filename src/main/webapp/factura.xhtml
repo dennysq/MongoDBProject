@@ -41,6 +41,11 @@
                         <pe:keyFilter regEx="/[a-z_]/i"/>
                     </p:inputText>
                     <p:spacer/>
+                </p:panelGrid>
+            </h:form>
+            <h:form id="detail_form">
+                <p:panelGrid columns="3"  styleClass="no_border center_block panel-grid-no-border">
+
                     <p:outputLabel for="fecha" value="Fecha:"/>
                     <p:calendar id="fecha"
                                 required="true"
@@ -49,11 +54,10 @@
                                 locale="es"
                                 pattern="dd/MM/yyyy"
                                 mindate="01/01/2016"
-                                />  
-                    <p:spacer/>
+                                />
+                    <p:outputLabel value="_________" style="color: #575757"/>
                 </p:panelGrid>
-            </h:form>
-            <h:form id="detail_form">
+                <p:spacer/>
                 <p:panelGrid columns="1"  styleClass="no_border center_block panel-grid-no-border">
                     <p:panel header="Detalle">
                         <p:panelGrid columns="3"  styleClass="no_border center_block panel-grid-no-border">
@@ -118,29 +122,9 @@
                                      update="@form" >
                         <p:confirm header="Confirmación" message="¿Está seguro de guardar la factura?" icon="ui-icon-alert" />
                     </p:commandButton>  
-                    <p:dataTable
-                        id="tabla_agregacion"
-                        value="#{facturaBean.productosSumarizados}"
-                        rows="3"
-                        var="productoS"
-                        paginator="true"
-                        paginatorPosition="bottom"
-                        emptyMessage="No hay productos"
-                        style="width: 600px;"
-                        >
-                        <p:column headerText="Nombre">
-                            <h:outputText value="#{productoS.nombre}" />
-                        </p:column>
-                        
-                        <p:column headerText="Total Ventas">
-                            <h:outputText value="#{productoS.total}" >
-                                <f:convertNumber currencySymbol="$" type="currency" />
-                            </h:outputText>
-                        </p:column>
-                        
-                    </p:dataTable>  
+
                 </p:panelGrid>
-                
+
                 <p:spacer/>
             </h:form>
         </p:panel>

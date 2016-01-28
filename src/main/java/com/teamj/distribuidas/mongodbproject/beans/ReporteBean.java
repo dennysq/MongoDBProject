@@ -13,10 +13,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import org.mongodb.morphia.aggregation.Accumulator;
 import org.mongodb.morphia.aggregation.Group;
+
 /**
  *
  * @author Gaming
@@ -24,6 +26,7 @@ import org.mongodb.morphia.aggregation.Group;
 @ViewScoped
 @ManagedBean
 public class ReporteBean implements Serializable {
+
     private boolean reporteProductos;
     private boolean reporteClientes;
     private boolean reporteVentas;
@@ -38,7 +41,28 @@ public class ReporteBean implements Serializable {
         this.productoDAO = new ProductoDAO(Producto.class, PersistenceManager.instance().datastore());
     }
 
-    
+    @PostConstruct
+    public void init() {
+        Iterator<AgregacionClientes> aggregateClientes = PersistenceManager.instance().datastore().createAggregation(Factura.class).unwind("detalles").group("nombre", Group.grouping("total", new Accumulator("$sum", "detalles.subtotal"))).aggregate(AgregacionClientes.class);
+        this.clientesSumarizados = new ArrayList<>();
+        this.productosSumarizados = new ArrayList<>();
+        this.ventasSumarizados = new ArrayList<>();
+        while (aggregateClientes.hasNext()) {
+            this.clientesSumarizados.add(aggregateClientes.next());
+
+        }
+        Iterator<AgregacionProducto> aggregateProductos = PersistenceManager.instance().datastore().createAggregation(Factura.class).unwind("detalles").group("detalles.nombre", Group.grouping("total", new Accumulator("$sum", "detalles.subtotal"))).aggregate(AgregacionProducto.class);
+        while (aggregateProductos.hasNext()) {
+            this.productosSumarizados.add(aggregateProductos.next());
+
+        }
+        Iterator<AgregacionVentas> aggregateVentas = PersistenceManager.instance().datastore().createAggregation(Factura.class).unwind("detalles").group("fechaEmision", Group.grouping("total", new Accumulator("$sum", "detalles.subtotal"))).aggregate(AgregacionVentas.class);
+        while (aggregateVentas.hasNext()) {
+            this.ventasSumarizados.add(aggregateVentas.next());
+
+        }
+    }
+
     public boolean isReporteProductos() {
         return reporteProductos;
     }
@@ -61,36 +85,6 @@ public class ReporteBean implements Serializable {
 
     public void setReporteVentas(boolean reporteVentas) {
         this.reporteVentas = reporteVentas;
-    }
-    public void mostarReporteProductos()
-    {
-        this.productosSumarizados = new ArrayList<>();
-        this.reporteProductos=true;
-        Iterator<AgregacionProducto> aggregate = PersistenceManager.instance().datastore().createAggregation(Factura.class).unwind("detalles").group("detalles.nombre", Group.grouping("total", new Accumulator("$sum", "detalles.subtotal"))).aggregate(AgregacionProducto.class);
-        while (aggregate.hasNext()) {
-            this.productosSumarizados.add(aggregate.next());
-
-        }        
-    }
-    public void mostarReporteClientes()
-    {
-        this.clientesSumarizados = new ArrayList<>();
-        this.reporteClientes=true;
-        Iterator<AgregacionClientes> aggregate = PersistenceManager.instance().datastore().createAggregation(Factura.class).unwind("detalles").group("cliente.$id", Group.grouping("total", new Accumulator("$sum", "detalles.subtotal"))).aggregate(AgregacionClientes.class);
-        while (aggregate.hasNext()) {
-            this.clientesSumarizados.add(aggregate.next());
-
-        } 
-    }
-    public void mostarReporteVentas()
-    {
-        this.ventasSumarizados = new ArrayList<>();
-        this.reporteVentas=true;
-        Iterator<AgregacionVentas> aggregate = PersistenceManager.instance().datastore().createAggregation(Factura.class).unwind("detalles").group("fechaEmision", Group.grouping("total", new Accumulator("$sum", "detalles.subtotal"))).aggregate(AgregacionVentas.class);
-        while (aggregate.hasNext()) {
-            this.ventasSumarizados.add(aggregate.next());
-
-        }
     }
 
     public List<Producto> getProductos() {
@@ -132,5 +126,5 @@ public class ReporteBean implements Serializable {
     public void setClientesSumarizados(List<AgregacionClientes> clientesSumarizados) {
         this.clientesSumarizados = clientesSumarizados;
     }
-   
+
 }

@@ -47,7 +47,6 @@ public class FacturaBean implements Serializable {
     private String idProducto;
     private List<AgregacionProducto> productosSumarizados;
 
-    
     public FacturaBean() {
         this.cliente = new Cliente();
         this.factura = new Factura();
@@ -91,11 +90,6 @@ public class FacturaBean implements Serializable {
             this.productoSeleccionado = productos.get(0);
 
         }
-        Iterator<AgregacionProducto> aggregate = PersistenceManager.instance().datastore().createAggregation(Factura.class).unwind("detalles").group("detalles.nombre", Group.grouping("total", new Accumulator("$sum", "detalles.subtotal"))).aggregate(AgregacionProducto.class);
-        while (aggregate.hasNext()) {
-            this.productosSumarizados.add(aggregate.next());
-
-        }
 
     }
 
@@ -134,6 +128,7 @@ public class FacturaBean implements Serializable {
     public void guardarFactura() {
         try {
             this.factura.setCliente(this.cliente);
+            this.factura.setNombre(this.cliente.getNombre());
             this.facturaDAO.save(factura);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Éxito", "La Factura ha sido guardada correctamente"));
         } catch (Exception e) {
