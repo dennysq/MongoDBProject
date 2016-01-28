@@ -14,9 +14,9 @@
             <p:commandButton value="Reporte Clientes" actionListener="#{reporteBean.mostarReporteClientes()}" icon="icon-report" update="@form"/>
             <p:commandButton value="Reporte Ventas" actionListener="#{reporteBean.mostarReporteVentas()}" icon="icon-report" update="@form"/>
             <p:dataTable id="tabla_reporteProductos" class="center_block"
-                             var="mochila" 
-                             value="#{mochilaBean.mochilas}" 
-                             selectionMode="single" 
+                             var="agregacionProducto" 
+                             value="#{reporteBean.productosSumarizados}" 
+                             
                              rows="6"
                              paginator="true"
                              paginatorPosition="bottom"
@@ -24,16 +24,15 @@
                              style="width: 600px;"
                              >                    
                     <p:column headerText="Producto">
-                        <h:outputText value="#{mochila.id}" />
+                        <h:outputText value="#{agregacionProducto.nombre}" />
                     </p:column>
                     <p:column headerText="Monto">
-                        <h:outputText value="#{mochila.nombre}" />
+                        <h:outputText value="#{agregacionProducto.total}" />
                     </p:column>                    
                 </p:dataTable>
             <p:dataTable id="tabla_reporteClientes" class="center_block"
-                             var="mochila" 
-                             value="#{mochilaBean.mochilas}" 
-                             selectionMode="single" 
+                             var="agregacionCliente" 
+                             value="#{reporteBean.clientesSumarizados}"                               
                              rows="6"
                              paginator="true"
                              paginatorPosition="bottom"
@@ -41,16 +40,15 @@
                              style="width: 600px;"
                              >                    
                     <p:column headerText="Cliente">
-                        <h:outputText value="#{mochila.id}" />
+                        <h:outputText value="#{agregacionCliente.nombre}" />
                     </p:column>
                     <p:column headerText="Monto">
-                        <h:outputText value="#{mochila.nombre}" />
+                        <h:outputText value="#{agregacionCliente.total}" />
                     </p:column>                    
                 </p:dataTable>
             <p:dataTable id="tabla_reporteVentas" class="center_block"
-                             var="mochila" 
-                             value="#{mochilaBean.mochilas}" 
-                             selectionMode="single" 
+                             var="agregacionVentas" 
+                             value="#{reporteBean.ventasSumarizados}"                              
                              rows="6"
                              paginator="true"
                              paginatorPosition="bottom"
@@ -58,10 +56,10 @@
                              style="width: 600px;"
                              >                    
                     <p:column headerText="Fecha">
-                        <h:outputText value="#{mochila.id}" />
+                        <h:outputText value="#{agregacionVentas.dia}" />
                     </p:column>
                     <p:column headerText="Monto">
-                        <h:outputText value="#{mochila.nombre}" />
+                        <h:outputText value="#{agregacionVentas.total}" />
                     </p:column>                    
                 </p:dataTable>
             
