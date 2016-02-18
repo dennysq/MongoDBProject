@@ -21,10 +21,21 @@
             <version>5.3</version>
         </dependency>
         <dependency>
-                <groupId>commons-beanutils</groupId>
-                <artifactId>commons-beanutils</artifactId>
-                <version>1.8.0</version>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>1.8.0</version>
         </dependency>
+        <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+            <version>1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.atmosphere</groupId>
+            <artifactId>atmosphere-runtime</artifactId>
+            <version>2.4.0-RC6</version>
+        </dependency>
+
         <dependency>  
             <groupId>org.primefaces.themes</groupId>  
             <artifactId>cruze</artifactId>  
@@ -42,15 +53,15 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-  		<groupId>org.mongodb</groupId>
-  		<artifactId>mongodb-driver</artifactId>
-  		<version>3.1.0</version>
-  	</dependency>
-  	<dependency>
-  		<groupId>org.mongodb.morphia</groupId>
-  		<artifactId>morphia</artifactId>
-  		<version>1.0.1</version>
-  	</dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongodb-driver</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mongodb.morphia</groupId>
+            <artifactId>morphia</artifactId>
+            <version>1.0.1</version>
+        </dependency>
     </dependencies>
 
     <build>
